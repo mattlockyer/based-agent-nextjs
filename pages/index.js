@@ -79,8 +79,16 @@ export default function Home() {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigator.clipboard.writeText(accountId);
-                                    setMessageHide('copied', 500);
+                                    try {
+                                        if(navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(accountId);
+                                            setMessageHide('Copied', 500);
+                                        } else {
+                                            setMessageHide('Clipboard not supported');
+                                        }
+                                    } catch (e) {
+                                        setMessageHide('Copy failed');
+                                    }
                                 }}
                             >
                                 copy
