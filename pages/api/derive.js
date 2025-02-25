@@ -21,6 +21,10 @@ export default async function derive(req, res) {
 
     // env prod in TEE
     const client = new TappdClient(endpoint);
+    // Add this check to prevent TEE operations in local dev
+    if (process.env.NODE_ENV !== 'production') {
+        throw new Error('TEE operations only available in production');
+    }
     // entropy from TEE hardware
     const randomString = Buffer.from(randomArray).toString('hex');
     const keyFromTee = await client.deriveKey(randomString, randomString);
