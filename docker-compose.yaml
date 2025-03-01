@@ -1,4 +1,3 @@
-version: '4.0'
 services:
     web:
         platform: linux/amd64 # Explicitly set for TDX
